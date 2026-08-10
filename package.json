@@ -3,7 +3,7 @@
   "displayName": "Smart Completion",
   "description": "AI 代码自动补全，支持 DeepSeek、Kimi、GLM(智谱)、通义千问 等国产大模型",
   "version": "0.1.0",
-  "publisher": "smart-completion",
+  "publisher": "binran",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -181,7 +181,7 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "pnpm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "typecheck": "tsc --noEmit"
