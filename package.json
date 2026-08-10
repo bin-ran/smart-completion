@@ -1,0 +1,198 @@
+{
+  "name": "smart-completion",
+  "displayName": "Smart Completion",
+  "description": "AI 代码自动补全，支持 DeepSeek、Kimi、GLM(智谱)、通义千问 等国产大模型",
+  "version": "0.1.0",
+  "publisher": "smart-completion",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Machine Learning",
+    "Programming Languages"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "smartCompletion.toggle",
+        "title": "Smart Completion: Toggle Enable/Disable"
+      },
+      {
+        "command": "smartCompletion.trigger",
+        "title": "Smart Completion: Trigger Completion"
+      },
+      {
+        "command": "smartCompletion.switchProvider",
+        "title": "Smart Completion: Switch Provider"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "smartCompletion.trigger",
+        "key": "alt+\\",
+        "mac": "alt+\\",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Smart Completion",
+      "properties": {
+        "smartCompletion.provider": {
+          "type": "string",
+          "enum": [
+            "deepseek",
+            "moonshot",
+            "glm",
+            "qwen"
+          ],
+          "enumDescriptions": [
+            "DeepSeek (deepseek-coder)",
+            "Kimi / Moonshot (moonshot-v1 / kimi-k2)",
+            "GLM / 智谱 (codegeex-4)",
+            "通义千问 / Qwen (qwen-coder)"
+          ],
+          "default": "deepseek",
+          "description": "选择补全服务提供方"
+        },
+        "smartCompletion.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否启用自动补全"
+        },
+        "smartCompletion.debounceDelay": {
+          "type": "number",
+          "default": 300,
+          "minimum": 0,
+          "description": "自动触发前的防抖延迟（毫秒）"
+        },
+        "smartCompletion.maxTokens": {
+          "type": "number",
+          "default": 256,
+          "minimum": 16,
+          "description": "单次补全的最大生成 token 数"
+        },
+        "smartCompletion.temperature": {
+          "type": "number",
+          "default": 0.2,
+          "minimum": 0,
+          "maximum": 2,
+          "description": "采样温度，越低越确定"
+        },
+        "smartCompletion.maxPrefixLines": {
+          "type": "number",
+          "default": 80,
+          "minimum": 1,
+          "description": "发送给模型的光标前最大行数"
+        },
+        "smartCompletion.maxSuffixLines": {
+          "type": "number",
+          "default": 40,
+          "minimum": 1,
+          "description": "发送给模型的光标后最大行数"
+        },
+        "smartCompletion.extraStopSequences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "额外的停止序列"
+        },
+        "smartCompletion.deepseek.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "DeepSeek API Key",
+          "scope": "resource"
+        },
+        "smartCompletion.deepseek.model": {
+          "type": "string",
+          "default": "deepseek-chat",
+          "description": "DeepSeek chat 模型（chat 模拟 FIM 用）"
+        },
+        "smartCompletion.deepseek.fimModel": {
+          "type": "string",
+          "default": "deepseek-coder",
+          "description": "DeepSeek FIM 模型"
+        },
+        "smartCompletion.deepseek.baseUrl": {
+          "type": "string",
+          "default": "https://api.deepseek.com",
+          "description": "DeepSeek API base URL"
+        },
+        "smartCompletion.moonshot.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Moonshot / Kimi API Key",
+          "scope": "resource"
+        },
+        "smartCompletion.moonshot.model": {
+          "type": "string",
+          "default": "moonshot-v1-8k",
+          "description": "Moonshot / Kimi 模型"
+        },
+        "smartCompletion.moonshot.baseUrl": {
+          "type": "string",
+          "default": "https://api.moonshot.cn/v1",
+          "description": "Moonshot API base URL"
+        },
+        "smartCompletion.glm.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "智谱 GLM API Key",
+          "scope": "resource"
+        },
+        "smartCompletion.glm.model": {
+          "type": "string",
+          "default": "codegeex-4",
+          "description": "GLM / 智谱 模型"
+        },
+        "smartCompletion.glm.baseUrl": {
+          "type": "string",
+          "default": "https://open.bigmodel.cn/api/paas/v4",
+          "description": "GLM API base URL"
+        },
+        "smartCompletion.qwen.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "通义千问 DashScope API Key",
+          "scope": "resource"
+        },
+        "smartCompletion.qwen.model": {
+          "type": "string",
+          "default": "qwen-coder-plus",
+          "description": "通义千问 模型"
+        },
+        "smartCompletion.qwen.fimModel": {
+          "type": "string",
+          "default": "qwen-coder-plus",
+          "description": "通义千问 FIM 模型"
+        },
+        "smartCompletion.qwen.baseUrl": {
+          "type": "string",
+          "default": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+          "description": "通义千问 OpenAI 兼容 base URL"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0"
+  },
+  "allowScripts": {
+    "esbuild@0.20.2": true
+  }
+}
