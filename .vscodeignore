@@ -3,7 +3,9 @@
 src/**
 node_modules/**
 .gitignore
-esbuild.config.mjs
 tsconfig.json
 **/*.map
 **/*.ts
+pnpm-lock.yaml
+pnpm-workspace.yaml
+package-lock.json

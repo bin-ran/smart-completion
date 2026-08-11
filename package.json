@@ -4,8 +4,14 @@
   "description": "AI 代码自动补全，支持 DeepSeek、Kimi、GLM(智谱)、通义千问 等国产大模型",
   "version": "0.1.0",
   "publisher": "binran",
+  "license": "MIT",
+  "icon": "icon.ico",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bin-ran/smart-completion"
+  },
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.125.0"
   },
   "categories": [
     "Other",
@@ -187,12 +193,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
-    "@types/vscode": "^1.85.0",
-    "esbuild": "^0.20.0",
-    "typescript": "^5.3.0"
-  },
-  "allowScripts": {
-    "esbuild@0.20.2": true
+    "@types/node": "^26.2.0",
+    "@types/vscode": "^1.125.0",
+    "typescript": "^7.0.2"
   }
 }
