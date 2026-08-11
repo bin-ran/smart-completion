@@ -2,7 +2,7 @@
   "name": "smart-completion",
   "displayName": "Smart Completion",
   "description": "AI 代码自动补全，支持 DeepSeek、Kimi、GLM(智谱)、通义千问 等国产大模型",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "binran",
   "license": "MIT",
   "icon": "icon.ico",
